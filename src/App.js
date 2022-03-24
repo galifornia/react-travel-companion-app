@@ -7,8 +7,8 @@ import { getPlacesData } from "./api/index";
 
 const App = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [coordinates, setCoordinates] = useState();
-  const [bounds, setBounds] = useState(null);
+  const [coordinates, setCoordinates] = useState({});
+  const [bounds, setBounds] = useState({});
 
   useEffect(() => {
     // Try to geolocate user on FTU
