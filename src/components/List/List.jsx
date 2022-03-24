@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import useStyles from "./styles";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
+import { v4 as uuidv4 } from "uuid";
 
 const List = () => {
   const classes = useStyles();
@@ -60,9 +61,9 @@ const List = () => {
           return (
             <Grid item key={i} xs={12}>
               <Grid container spacing={3} className={classes.list}>
-                {places.map((place, i) => {
+                {places.map((place) => {
                   return (
-                    <Grid item key={i} xs={12}>
+                    <Grid item key={uuidv4()} xs={12}>
                       <PlaceDetails {...place} />
                     </Grid>
                   );
