@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getPlacesData = async (boundingBox) => {
+export const getPlacesData = async (sw, ne) => {
   const URL =
     "https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary";
 
@@ -8,10 +8,10 @@ export const getPlacesData = async (boundingBox) => {
     method: "GET",
     url: URL,
     params: {
-      bl_latitude: "11.847676",
-      tr_latitude: "12.838442",
-      bl_longitude: "109.095887",
-      tr_longitude: "109.149359",
+      bl_latitude: sw.lat,
+      tr_latitude: ne.lat,
+      bl_longitude: sw.lng,
+      tr_longitude: ne.lng,
       restaurant_tagcategory_standalone: "10591",
       restaurant_tagcategory: "10591",
       limit: "30",
@@ -26,7 +26,7 @@ export const getPlacesData = async (boundingBox) => {
     },
   };
 
-  //   axios
+  //   return axios
   //     .request(options)
   //     .then(function (response) {
   //       const {
@@ -38,6 +38,7 @@ export const getPlacesData = async (boundingBox) => {
   //     .catch(function (error) {
   //       console.error(error);
   //     });
+
   const data = [
     {
       location_id: "9982902",

@@ -20,7 +20,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    getPlacesData().then((data) => setRestaurants(data));
+    if (!bounds) return;
+    getPlacesData(bounds.sw, bounds.ne).then((data) => setRestaurants(data));
   }, [coordinates, bounds]);
 
   return (
