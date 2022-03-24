@@ -11,12 +11,8 @@ import useStyles from "./styles";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 import { v4 as uuidv4 } from "uuid";
 
-const List = () => {
-  const classes = useStyles();
-  const [filter, setFilter] = useState("restaurants");
-  const [rating, setRating] = useState("");
-
-  const places = [
+const List = ({
+  places = [
     { name: "Chill Place" },
     { name: "Cool Place" },
     { name: "bad Place" },
@@ -29,7 +25,11 @@ const List = () => {
     { name: "WWWW" },
     { name: "GGG" },
     { name: "MMMMM" },
-  ];
+  ],
+}) => {
+  const classes = useStyles();
+  const [filter, setFilter] = useState("restaurants");
+  const [rating, setRating] = useState("");
 
   return (
     <div className={classes.container}>

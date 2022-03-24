@@ -1,10 +1,17 @@
 import { CssBaseline, Grid } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import List from "./components/List/List";
 import Map from "./components/Map/Map";
+import { getPlacesData } from "./api/index";
 
 const App = () => {
+  const [restaurants, setRestaurants] = useState();
+
+  useEffect(() => {
+    getPlacesData().then((data) => setRestaurants(data));
+  }, []);
+
   return (
     <>
       <CssBaseline />
