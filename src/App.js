@@ -6,11 +6,14 @@ import Map from "./components/Map/Map";
 import { getPlacesData } from "./api/index";
 
 const App = () => {
-  const [restaurants, setRestaurants] = useState();
+  const [restaurants, setRestaurants] = useState([]);
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
+  const [bounds, setBounds] = useState(null);
 
   useEffect(() => {
+    console.log(coordinates, bounds);
     getPlacesData().then((data) => setRestaurants(data));
-  }, []);
+  }, [coordinates, bounds]);
 
   return (
     <>
@@ -18,10 +21,14 @@ const App = () => {
       <Header />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
-          <List />
+          <List places={restaurants} />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Map />
+          <Map
+            coordinates={coordinates}
+            setCoordinates={setCoordinates}
+            setBounds={setBounds}
+          />
         </Grid>
       </Grid>
     </>

@@ -4,22 +4,24 @@ import React from "react";
 
 import useStyles from "./styles";
 
-const Map = () => {
+const Map = ({ coordinates, setCoordinates, setBounds }) => {
   const classes = useStyles();
-  const coordinates = { lat: 0, lng: 0 };
-
   const isMobile = useMediaQuery("(min-width: 600px)");
 
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-        defaultCenter={coordinates}
+        defaultCenter={{ lat: 0, lng: 0 }}
         center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
         options={[]}
-        onChange={() => console.log("changing")}
+        onChange={(e) => {
+          console.log(e);
+          setCoordinates({ lat: e.center.lat, lng: e.center.lng });
+          setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+        }}
         onChildClick={() => console.log("clicking in child")}
       ></GoogleMapReact>
     </div>
