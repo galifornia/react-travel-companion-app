@@ -7,11 +7,19 @@ import { getPlacesData } from "./api/index";
 
 const App = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
+  const [coordinates, setCoordinates] = useState();
   const [bounds, setBounds] = useState(null);
 
   useEffect(() => {
-    console.log(coordinates, bounds);
+    // Try to geolocate user on FTU
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        setCoordinates({ lat: latitude, lng: longitude });
+      }
+    );
+  }, []);
+
+  useEffect(() => {
     getPlacesData().then((data) => setRestaurants(data));
   }, [coordinates, bounds]);
 
@@ -24,11 +32,13 @@ const App = () => {
           <List places={restaurants} />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Map
-            coordinates={coordinates}
-            setCoordinates={setCoordinates}
-            setBounds={setBounds}
-          />
+          {coordinates && (
+            <Map
+              coordinates={coordinates}
+              setCoordinates={setCoordinates}
+              setBounds={setBounds}
+            />
+          )}
         </Grid>
       </Grid>
     </>
