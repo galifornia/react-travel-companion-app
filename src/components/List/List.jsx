@@ -11,22 +11,7 @@ import useStyles from "./styles";
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
 import { v4 as uuidv4 } from "uuid";
 
-const List = ({
-  places = [
-    { name: "Chill Place" },
-    { name: "Cool Place" },
-    { name: "bad Place" },
-    { name: "Primero" },
-    { name: "Segundo" },
-    { name: "Tercero" },
-    { name: "ZZZz" },
-    { name: "TT" },
-    { name: "DDDD" },
-    { name: "WWWW" },
-    { name: "GGG" },
-    { name: "MMMMM" },
-  ],
-}) => {
+const List = ({ places }) => {
   const classes = useStyles();
   const [filter, setFilter] = useState("restaurants");
   const [rating, setRating] = useState("");
@@ -60,15 +45,13 @@ const List = ({
         {places?.map((place, i) => {
           return (
             <Grid item key={i} xs={12}>
-              <Grid container spacing={3} className={classes.list}>
-                {places.map((place) => {
-                  return (
-                    <Grid item key={uuidv4()} xs={12}>
-                      <PlaceDetails {...place} />
-                    </Grid>
-                  );
-                })}
-              </Grid>
+              {places.map((place) => {
+                return (
+                  <Grid item key={uuidv4()} xs={12}>
+                    <PlaceDetails {...place} />
+                  </Grid>
+                );
+              })}
             </Grid>
           );
         })}
