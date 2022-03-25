@@ -13,6 +13,7 @@ import useStyles from "./styles";
 
 import { v4 as uuidv4 } from "uuid";
 import { LocationOn, Phone } from "@material-ui/icons";
+import { Rating } from "@material-ui/lab";
 
 const PlaceDetails = ({
   name,
@@ -25,6 +26,8 @@ const PlaceDetails = ({
   awards,
   web_url,
   website,
+  rating,
+  num_reviews,
 }) => {
   const classes = useStyles();
   const DEFAULT_CARD_IMG_URL =
@@ -41,6 +44,12 @@ const PlaceDetails = ({
         <Typography gutterBottom variant="h5">
           {name}
         </Typography>
+        <Box display="flex" justifyContent={"space-between"}>
+          <Rating size="small" value={Number(rating)} readOnly />
+          <Typography gutterBottom variant="subtitle1">
+            {num_reviews} reviews
+          </Typography>
+        </Box>
         <Box display="flex" justifyContent={"space-between"}>
           <Typography variant="subtitle1">Price</Typography>
           <Typography gutterBottom variant="subtitle1">
