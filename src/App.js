@@ -20,7 +20,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (!bounds) return;
+    if (!bounds || !bounds.sw || !bounds.ne) return;
     getPlacesData(bounds.sw, bounds.ne).then((data) => setRestaurants(data));
   }, [coordinates, bounds]);
 
@@ -38,6 +38,7 @@ const App = () => {
               coordinates={coordinates}
               setCoordinates={setCoordinates}
               setBounds={setBounds}
+              restaurants={restaurants}
             />
           )}
         </Grid>

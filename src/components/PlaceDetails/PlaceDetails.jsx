@@ -54,7 +54,7 @@ const PlaceDetails = ({
           </Typography>
         </Box>
         {awards &&
-          awards.map((award, i) => (
+          awards.map((award) => (
             <Box
               key={uuidv4()}
               display="flex"
