@@ -26,18 +26,18 @@ export const getPlacesData = async (sw, ne) => {
     },
   };
 
-  //   return axios
-  //     .request(options)
-  //     .then(function (response) {
-  //       const {
-  //         data: { data: data },
-  //       } = response;
+  // return axios
+  //   .request(options)
+  //   .then(function (response) {
+  //     const {
+  //       data: { data: data },
+  //     } = response;
 
-  //       return data;
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //     });
+  //     return data;
+  //   })
+  //   .catch(function (error) {
+  //     console.error(error);
+  //   });
 
   const data = [
     {

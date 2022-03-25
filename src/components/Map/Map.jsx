@@ -1,5 +1,5 @@
 import { Grid, Paper, Typography, useMediaQuery } from "@material-ui/core";
-import { LocationOnOutlined } from "@material-ui/icons";
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import GoogleMapReact from "google-map-react";
 import React from "react";
 
@@ -9,9 +9,7 @@ import useStyles from "./styles";
 
 const Map = ({ coordinates, setCoordinates, setBounds, restaurants }) => {
   const classes = useStyles();
-  const isMobile = useMediaQuery("(min-width: 600px)");
-
-  const { lat: lat, lng: lng } = coordinates;
+  const isDesktop = useMediaQuery("(min-width: 600px)");
 
   const DEFAULT_IMG_URL =
     "https://www.theworlds50best.com/filestore/jpg/W50BR2021-150-Noma-2.jpg";
@@ -21,7 +19,7 @@ const Map = ({ coordinates, setCoordinates, setBounds, restaurants }) => {
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
         defaultCenter={{ lat: 0, lng: 0 }}
-        center={{ lat, lng }}
+        center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
         options={[]}
@@ -33,35 +31,38 @@ const Map = ({ coordinates, setCoordinates, setBounds, restaurants }) => {
       >
         {restaurants?.map((restaurant) => {
           return (
-            <div
-              key={uuidv4()}
-              className={classes.markerContainer}
-              lat={Number(restaurant?.latitude)}
-              lng={Number(restaurant?.lng)}
-            >
-              {isMobile ? (
-                <LocationOnOutlined color="primary" fontSize="large" />
-              ) : (
-                <Paper elevation={3} className={classes.paper}>
-                  <Typography
-                    className={classes.Typography}
-                    variant="subtitle2"
-                    gutterBottom
-                  >
-                    {restaurant.name}
-                  </Typography>
-                  <img
-                    className={classes.pointer}
-                    src={
-                      restaurant.photo
-                        ? restaurant.images.large.url
-                        : DEFAULT_IMG_URL
-                    }
-                    alt={classes.name}
-                  />
-                </Paper>
-              )}
-            </div>
+            restaurant.latitude &&
+            restaurant.longitude && (
+              <div
+                key={uuidv4()}
+                className={classes.markerContainer}
+                lat={Number(restaurant.latitude)}
+                lng={Number(restaurant.longitude)}
+              >
+                {!isDesktop ? (
+                  <LocationOnOutlinedIcon color="primary" fontSize="large" />
+                ) : (
+                  <Paper elevation={3} className={classes.paper}>
+                    <Typography
+                      className={classes.typography}
+                      variant="subtitle2"
+                      gutterBottom
+                    >
+                      {restaurant.name}
+                    </Typography>
+                    <img
+                      className={classes.pointer}
+                      src={
+                        restaurant.photo
+                          ? restaurant.photo.images.large.url
+                          : DEFAULT_IMG_URL
+                      }
+                      alt={classes.name}
+                    />
+                  </Paper>
+                )}
+              </div>
+            )
           );
         })}
       </GoogleMapReact>

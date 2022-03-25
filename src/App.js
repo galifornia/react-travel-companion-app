@@ -4,11 +4,14 @@ import Header from "./components/Header/Header";
 import List from "./components/List/List";
 import Map from "./components/Map/Map";
 import { getPlacesData } from "./api/index";
+import useDebounce from "./hooks/debounce";
 
 const App = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
+
+  const debounceBounds = useDebounce(bounds, 1000); // Make sure we do not call API that often
 
   useEffect(() => {
     // Try to geolocate user on FTU
@@ -20,9 +23,12 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (!bounds || !bounds.sw || !bounds.ne) return;
-    getPlacesData(bounds.sw, bounds.ne).then((data) => setRestaurants(data));
-  }, [coordinates, bounds]);
+    if (!debounceBounds || !debounceBounds.sw || !debounceBounds.ne) return;
+
+    getPlacesData(debounceBounds.sw, debounceBounds.ne).then((data) =>
+      setRestaurants(data)
+    );
+  }, [debounceBounds]);
 
   return (
     <>
