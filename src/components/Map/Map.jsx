@@ -1,5 +1,6 @@
 import { Grid, Paper, Typography, useMediaQuery } from "@material-ui/core";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import { Rating } from "@material-ui/lab";
 import GoogleMapReact from "google-map-react";
 import React from "react";
 
@@ -58,6 +59,11 @@ const Map = ({ coordinates, setCoordinates, setBounds, restaurants }) => {
                           : DEFAULT_IMG_URL
                       }
                       alt={classes.name}
+                    />
+                    <Rating
+                      size="small"
+                      value={Number(restaurant.rating)}
+                      readOnly
                     />
                   </Paper>
                 )}
