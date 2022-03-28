@@ -5,28 +5,32 @@ import {
   MenuItem,
   Select,
   Typography,
-} from "@material-ui/core";
-import React, { useState } from "react";
-import useStyles from "./styles";
-import PlaceDetails from "../PlaceDetails/PlaceDetails";
-import { v4 as uuidv4 } from "uuid";
+} from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import useStyles from './styles';
+import PlaceDetails from '../PlaceDetails/PlaceDetails';
+import { v4 as uuidv4 } from 'uuid';
 
 const List = ({ places }) => {
   const classes = useStyles();
-  const [filter, setFilter] = useState("restaurants");
-  const [rating, setRating] = useState("");
+  const [filter, setFilter] = useState('restaurants');
+  const [rating, setRating] = useState('');
+
+  useEffect(() => {
+    console.log('FILTERING OR RATING');
+  }, [filter, rating]);
 
   return (
     <div className={classes.container}>
-      <Typography variant="h4">
+      <Typography variant='h4'>
         Restaurants, Hotels & Attractions around you
       </Typography>
       <FormControl className={classes.formControl}>
         <InputLabel>Type</InputLabel>
         <Select value={filter} onChange={(ev) => setFilter(ev.target.value)}>
-          <MenuItem value="restaurants">Restaurants</MenuItem>
-          <MenuItem value="hotels">Hotels</MenuItem>
-          <MenuItem value="attractions">Attractions</MenuItem>
+          <MenuItem value='restaurants'>Restaurants</MenuItem>
+          <MenuItem value='hotels'>Hotels</MenuItem>
+          <MenuItem value='attractions'>Attractions</MenuItem>
         </Select>
       </FormControl>
 

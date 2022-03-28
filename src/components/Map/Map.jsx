@@ -1,19 +1,30 @@
-import { Grid, Paper, Typography, useMediaQuery } from "@material-ui/core";
-import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
-import { Rating } from "@material-ui/lab";
-import GoogleMapReact from "google-map-react";
-import React from "react";
+import { Grid, Paper, Typography, useMediaQuery } from '@material-ui/core';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import { Rating } from '@material-ui/lab';
+import GoogleMapReact from 'google-map-react';
+import React, { useEffect } from 'react';
 
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
+import mapStyles from '../../mapStyles';
 
-import useStyles from "./styles";
+import useStyles from './styles';
 
-const Map = ({ coordinates, setCoordinates, setBounds, restaurants }) => {
+const Map = ({
+  coordinates,
+  bounds,
+  setCoordinates,
+  setBounds,
+  restaurants,
+}) => {
   const classes = useStyles();
-  const isDesktop = useMediaQuery("(min-width: 600px)");
+  const isDesktop = useMediaQuery('(min-width: 600px)');
 
   const DEFAULT_IMG_URL =
-    "https://www.theworlds50best.com/filestore/jpg/W50BR2021-150-Noma-2.jpg";
+    'https://www.theworlds50best.com/filestore/jpg/W50BR2021-150-Noma-2.jpg';
+
+  useEffect(() => {
+    console.log('UPDATING REST IN MAP');
+  }, [restaurants]);
 
   return (
     <div className={classes.mapContainer}>
@@ -23,30 +34,34 @@ const Map = ({ coordinates, setCoordinates, setBounds, restaurants }) => {
         center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
-        options={[]}
+        options={{
+          disableDefaultUI: true,
+          zoomControl: true,
+          styles: mapStyles,
+        }}
         onChange={(e) => {
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
-        onChildClick={() => console.log("clicking in child")}
+        onChildClick={() => console.log('clicking in child')}
       >
         {restaurants?.map((restaurant) => {
           return (
             restaurant.latitude &&
             restaurant.longitude && (
               <div
-                key={uuidv4()}
+                key={restaurant.location_id}
                 className={classes.markerContainer}
                 lat={Number(restaurant.latitude)}
                 lng={Number(restaurant.longitude)}
               >
                 {!isDesktop ? (
-                  <LocationOnOutlinedIcon color="primary" fontSize="large" />
+                  <LocationOnOutlinedIcon color='primary' fontSize='large' />
                 ) : (
                   <Paper elevation={3} className={classes.paper}>
                     <Typography
                       className={classes.typography}
-                      variant="subtitle2"
+                      variant='subtitle2'
                       gutterBottom
                     >
                       {restaurant.name}
@@ -61,7 +76,7 @@ const Map = ({ coordinates, setCoordinates, setBounds, restaurants }) => {
                       alt={classes.name}
                     />
                     <Rating
-                      size="small"
+                      size='small'
                       value={Number(restaurant.rating)}
                       readOnly
                     />

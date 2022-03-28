@@ -8,10 +8,10 @@ import useDebounce from './hooks/debounce';
 
 const App = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [coordinates, setCoordinates] = useState({});
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const [bounds, setBounds] = useState({});
 
-  const debounceBounds = useDebounce(bounds, 1000); // Make sure we do not call API that often
+  const debounceBounds = useDebounce(bounds, 1500); // Make sure we do not call API that often
 
   useEffect(() => {
     // Try to geolocate user on FTU
