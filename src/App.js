@@ -15,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     // Try to geolocate user on FTU
-    navigator.geolocation.getCurrentPosition(
+    navigator?.geolocation?.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
         setCoordinates({ lat: latitude, lng: longitude });
       }
