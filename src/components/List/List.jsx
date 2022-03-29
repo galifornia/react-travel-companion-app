@@ -6,19 +6,24 @@ import {
   Select,
   Typography,
 } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import useStyles from './styles';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import { v4 as uuidv4 } from 'uuid';
 
-const List = ({ places }) => {
+const List = ({ places, childClicked }) => {
   const classes = useStyles();
   const [filter, setFilter] = useState('restaurants');
   const [rating, setRating] = useState('');
+  const [elRefs, setElRefs] = useState([]);
 
   useEffect(() => {
-    console.log('FILTERING OR RATING');
-  }, [filter, rating]);
+    const refs = Array(places.length)
+      .fill()
+      .map((_, i) => elRefs[i] || createRef());
+
+    setElRefs(refs);
+  }, [places]);
 
   return (
     <div className={classes.container}>
@@ -48,14 +53,12 @@ const List = ({ places }) => {
       <Grid container spacing={3} className={classes.list}>
         {places?.map((place, i) => {
           return (
-            <Grid item key={i} xs={12}>
-              {places.map((place) => {
-                return (
-                  <Grid item key={uuidv4()} xs={12}>
-                    <PlaceDetails {...place} />
-                  </Grid>
-                );
-              })}
+            <Grid item key={i} ref={elRefs[i]} xs={12}>
+              <PlaceDetails
+                {...place}
+                selected={Number(childClicked) === i}
+                refProp={elRefs[i]}
+              />
             </Grid>
           );
         })}

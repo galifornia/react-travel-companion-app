@@ -652,6 +652,6 @@ export const getPlacesData = async (sw, ne) => {
       mob_ptype: 'app_restaurants',
     },
   ];
-  console.log('FETCHI DATA');
+
   return data;
 };

@@ -10,6 +10,7 @@ const App = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const [bounds, setBounds] = useState({});
+  const [childClicked, setChildClicked] = useState();
 
   const debounceBounds = useDebounce(bounds, 1500); // Make sure we do not call API that often
 
@@ -36,11 +37,12 @@ const App = () => {
       <Header />
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
-          <List places={restaurants} />
+          <List places={restaurants} childClicked={childClicked} />
         </Grid>
         <Grid item xs={12} md={8}>
           {coordinates && (
             <Map
+              setChildClicked={setChildClicked}
               coordinates={coordinates}
               setCoordinates={setCoordinates}
               setBounds={setBounds}

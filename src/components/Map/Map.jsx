@@ -4,7 +4,6 @@ import { Rating } from '@material-ui/lab';
 import GoogleMapReact from 'google-map-react';
 import React, { useEffect } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
 import mapStyles from '../../mapStyles';
 
 import useStyles from './styles';
@@ -15,16 +14,13 @@ const Map = ({
   setCoordinates,
   setBounds,
   restaurants,
+  setChildClicked,
 }) => {
   const classes = useStyles();
   const isDesktop = useMediaQuery('(min-width: 600px)');
 
   const DEFAULT_IMG_URL =
     'https://www.theworlds50best.com/filestore/jpg/W50BR2021-150-Noma-2.jpg';
-
-  useEffect(() => {
-    console.log('UPDATING REST IN MAP');
-  }, [restaurants]);
 
   return (
     <div className={classes.mapContainer}>
@@ -43,14 +39,14 @@ const Map = ({
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
-        onChildClick={() => console.log('clicking in child')}
+        onChildClick={(e) => setChildClicked(e)}
       >
-        {restaurants?.map((restaurant) => {
+        {restaurants?.map((restaurant, i) => {
           return (
             restaurant.latitude &&
             restaurant.longitude && (
               <div
-                key={restaurant.location_id}
+                key={i}
                 className={classes.markerContainer}
                 lat={Number(restaurant.latitude)}
                 lng={Number(restaurant.longitude)}
