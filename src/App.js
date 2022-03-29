@@ -11,6 +11,7 @@ const App = () => {
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const [bounds, setBounds] = useState({});
   const [childClicked, setChildClicked] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const debounceBounds = useDebounce(bounds, 1500); // Make sure we do not call API that often
 
@@ -25,10 +26,12 @@ const App = () => {
 
   useEffect(() => {
     if (!debounceBounds || !debounceBounds.sw || !debounceBounds.ne) return;
+    setIsLoading(true);
 
-    getPlacesData(debounceBounds.sw, debounceBounds.ne).then((data) =>
-      setRestaurants(data)
-    );
+    getPlacesData(debounceBounds.sw, debounceBounds.ne).then((data) => {
+      setRestaurants(data);
+      setIsLoading(false);
+    });
   }, [debounceBounds]);
 
   return (
@@ -37,7 +40,11 @@ const App = () => {
       <Header />
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
-          <List places={restaurants} childClicked={childClicked} />
+          <List
+            places={restaurants}
+            childClicked={childClicked}
+            isLoading={isLoading}
+          />
         </Grid>
         <Grid item xs={12} md={8}>
           {coordinates && (

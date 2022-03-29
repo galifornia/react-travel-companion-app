@@ -41,47 +41,48 @@ const Map = ({
         }}
         onChildClick={(e) => setChildClicked(e)}
       >
-        {restaurants?.map((restaurant, i) => {
-          return (
-            restaurant.latitude &&
-            restaurant.longitude && (
-              <div
-                key={i}
-                className={classes.markerContainer}
-                lat={Number(restaurant.latitude)}
-                lng={Number(restaurant.longitude)}
-              >
-                {!isDesktop ? (
-                  <LocationOnOutlinedIcon color='primary' fontSize='large' />
-                ) : (
-                  <Paper elevation={3} className={classes.paper}>
-                    <Typography
-                      className={classes.typography}
-                      variant='subtitle2'
-                      gutterBottom
-                    >
-                      {restaurant.name}
-                    </Typography>
-                    <img
-                      className={classes.pointer}
-                      src={
-                        restaurant.photo
-                          ? restaurant.photo.images.large.url
-                          : DEFAULT_IMG_URL
-                      }
-                      alt={classes.name}
-                    />
-                    <Rating
-                      size='small'
-                      value={Number(restaurant.rating)}
-                      readOnly
-                    />
-                  </Paper>
-                )}
-              </div>
-            )
-          );
-        })}
+        {restaurants &&
+          restaurants?.map((restaurant, i) => {
+            return (
+              restaurant.latitude &&
+              restaurant.longitude && (
+                <div
+                  key={i}
+                  className={classes.markerContainer}
+                  lat={Number(restaurant.latitude)}
+                  lng={Number(restaurant.longitude)}
+                >
+                  {!isDesktop ? (
+                    <LocationOnOutlinedIcon color='primary' fontSize='large' />
+                  ) : (
+                    <Paper elevation={3} className={classes.paper}>
+                      <Typography
+                        className={classes.typography}
+                        variant='subtitle2'
+                        gutterBottom
+                      >
+                        {restaurant.name}
+                      </Typography>
+                      <img
+                        className={classes.pointer}
+                        src={
+                          restaurant.photo
+                            ? restaurant.photo.images.large.url
+                            : DEFAULT_IMG_URL
+                        }
+                        alt={classes.name}
+                      />
+                      <Rating
+                        size='small'
+                        value={Number(restaurant.rating)}
+                        readOnly
+                      />
+                    </Paper>
+                  )}
+                </div>
+              )
+            );
+          })}
       </GoogleMapReact>
     </div>
   );

@@ -653,5 +653,14 @@ export const getPlacesData = async (sw, ne) => {
     },
   ];
 
-  return data;
+  const promise = (data) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(data);
+      }, 1500);
+    });
+  };
+
+  let res = await promise(data);
+  return res;
 };
