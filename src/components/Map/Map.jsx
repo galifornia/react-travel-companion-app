@@ -1,8 +1,8 @@
-import { Grid, Paper, Typography, useMediaQuery } from '@material-ui/core';
+import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import { Rating } from '@material-ui/lab';
 import GoogleMapReact from 'google-map-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import mapStyles from '../../mapStyles';
 

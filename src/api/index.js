@@ -29,7 +29,7 @@ export const getPlacesData = async (type, sw, ne) => {
     .request(options)
     .then(function (response) {
       const {
-        data: { data: data },
+        data: { data },
       } = response;
 
       return data;
