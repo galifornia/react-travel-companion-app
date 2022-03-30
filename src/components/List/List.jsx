@@ -10,12 +10,17 @@ import {
 import React, { createRef, useEffect, useState } from 'react';
 import useStyles from './styles';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
-import { v4 as uuidv4 } from 'uuid';
 
-const List = ({ places, childClicked, isLoading }) => {
+const List = ({
+  places,
+  childClicked,
+  isLoading,
+  type,
+  setType,
+  rating,
+  setRating,
+}) => {
   const classes = useStyles();
-  const [filter, setFilter] = useState('restaurants');
-  const [rating, setRating] = useState('');
   const [elRefs, setElRefs] = useState([]);
 
   useEffect(() => {
@@ -40,10 +45,7 @@ const List = ({ places, childClicked, isLoading }) => {
         <>
           <FormControl className={classes.formControl}>
             <InputLabel>Type</InputLabel>
-            <Select
-              value={filter}
-              onChange={(ev) => setFilter(ev.target.value)}
-            >
+            <Select value={type} onChange={(ev) => setType(ev.target.value)}>
               <MenuItem value='restaurants'>Restaurants</MenuItem>
               <MenuItem value='hotels'>Hotels</MenuItem>
               <MenuItem value='attractions'>Attractions</MenuItem>

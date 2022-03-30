@@ -13,6 +13,9 @@ const App = () => {
   const [childClicked, setChildClicked] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
+  const [type, setType] = useState('restaurants');
+  const [rating, setRating] = useState('');
+
   const debounceBounds = useDebounce(bounds, 1500); // Make sure we do not call API that often
 
   useEffect(() => {
@@ -28,11 +31,11 @@ const App = () => {
     if (!debounceBounds || !debounceBounds.sw || !debounceBounds.ne) return;
     setIsLoading(true);
 
-    getPlacesData(debounceBounds.sw, debounceBounds.ne).then((data) => {
+    getPlacesData(type, debounceBounds.sw, debounceBounds.ne).then((data) => {
       setRestaurants(data);
       setIsLoading(false);
     });
-  }, [debounceBounds]);
+  }, [type, debounceBounds]);
 
   return (
     <>
@@ -44,6 +47,10 @@ const App = () => {
             places={restaurants}
             childClicked={childClicked}
             isLoading={isLoading}
+            type={type}
+            setType={setType}
+            rating={rating}
+            setRating={setRating}
           />
         </Grid>
         <Grid item xs={12} md={8}>
