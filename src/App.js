@@ -7,7 +7,8 @@ import { getPlacesData } from './api/index';
 import useDebounce from './hooks/debounce';
 
 const App = () => {
-  const [restaurants, setRestaurants] = useState([]);
+  const [places, setPlaces] = useState([]);
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
   const [bounds, setBounds] = useState({});
   const [childClicked, setChildClicked] = useState();
@@ -28,11 +29,16 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    const filteredPlaces = places.filter((place) => place.rating > rating);
+    setFilteredPlaces(filteredPlaces);
+  }, [rating, places]);
+
+  useEffect(() => {
     if (!debounceBounds || !debounceBounds.sw || !debounceBounds.ne) return;
     setIsLoading(true);
 
     getPlacesData(type, debounceBounds.sw, debounceBounds.ne).then((data) => {
-      setRestaurants(data);
+      setPlaces(data);
       setIsLoading(false);
     });
   }, [type, debounceBounds]);
@@ -44,7 +50,7 @@ const App = () => {
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
           <List
-            places={restaurants}
+            places={filteredPlaces.length > 0 ? filteredPlaces : places}
             childClicked={childClicked}
             isLoading={isLoading}
             type={type}
@@ -60,7 +66,7 @@ const App = () => {
               coordinates={coordinates}
               setCoordinates={setCoordinates}
               setBounds={setBounds}
-              restaurants={restaurants}
+              places={filteredPlaces.length > 0 ? filteredPlaces : places}
             />
           )}
         </Grid>

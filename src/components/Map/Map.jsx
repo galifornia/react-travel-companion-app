@@ -10,10 +10,9 @@ import useStyles from './styles';
 
 const Map = ({
   coordinates,
-  bounds,
   setCoordinates,
   setBounds,
-  restaurants,
+  places,
   setChildClicked,
 }) => {
   const classes = useStyles();
@@ -41,16 +40,16 @@ const Map = ({
         }}
         onChildClick={(e) => setChildClicked(e)}
       >
-        {restaurants &&
-          restaurants?.map((restaurant, i) => {
+        {places &&
+          places?.map((places, i) => {
             return (
-              restaurant.latitude &&
-              restaurant.longitude && (
+              places.latitude &&
+              places.longitude && (
                 <div
                   key={i}
                   className={classes.markerContainer}
-                  lat={Number(restaurant.latitude)}
-                  lng={Number(restaurant.longitude)}
+                  lat={Number(places.latitude)}
+                  lng={Number(places.longitude)}
                 >
                   {!isDesktop ? (
                     <LocationOnOutlinedIcon color='primary' fontSize='large' />
@@ -61,20 +60,20 @@ const Map = ({
                         variant='subtitle2'
                         gutterBottom
                       >
-                        {restaurant.name}
+                        {places.name}
                       </Typography>
                       <img
                         className={classes.pointer}
                         src={
-                          restaurant.photo
-                            ? restaurant.photo.images.large.url
+                          places.photo
+                            ? places.photo.images.large.url
                             : DEFAULT_IMG_URL
                         }
                         alt={classes.name}
                       />
                       <Rating
                         size='small'
-                        value={Number(restaurant.rating)}
+                        value={Number(places.rating)}
                         readOnly
                       />
                     </Paper>
